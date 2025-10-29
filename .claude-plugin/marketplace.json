@@ -1,0 +1,13 @@
+{
+  "name": "toolkit",
+  "owner": {
+    "name": "Tadd Giles"
+  },
+  "plugins": [
+    {
+      "name": "core",
+      "source": "./core",
+      "description": "Essential agents, commands and skills"
+    }
+  ]
+}

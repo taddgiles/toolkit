@@ -1,0 +1,8 @@
+{
+  "name": "core",
+  "description": "Core Plugin",
+  "version": "1.0.0",
+  "author": {
+    "name": "Tadd Giles"
+  }
+}
