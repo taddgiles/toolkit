@@ -1,4 +1,4 @@
-# Tadd's Personal Claude Code Marketplace
+# Tadd's Claude Code Toolkit
 
 Collection of tools I'm using in Claude Code.
 
