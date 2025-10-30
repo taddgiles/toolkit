@@ -15,6 +15,24 @@ Syncs plan files to Jira by managing child work items (Tasks) under an epic.
 
 ## Instructions
 
+### 0. Locate Script Directory
+
+IMPORTANT: All scripts referenced in this skill are in the `scripts/` subdirectory of this skill.
+
+Before executing any script, find the skill's script directory. Use this bash command:
+```bash
+SCRIPTS_DIR=$(find "$HOME/.claude/plugins/marketplaces" -type d -path "*/toolkit/core/skills/jira-plan-sync/scripts" 2>/dev/null | head -1)
+```
+
+If the skill is being developed locally and not found via marketplace, use:
+```bash
+if [ -z "$SCRIPTS_DIR" ]; then
+  SCRIPTS_DIR="/Users/Tadd/src/taddgiles/toolkit/core/skills/jira-plan-sync/scripts"
+fi
+```
+
+All script references like `./scripts/create-epic.sh` should be executed as `"$SCRIPTS_DIR/create-epic.sh"` throughout this workflow.
+
 ### 1. Validate Inputs
 
 Check that required environment variables are set:
@@ -37,7 +55,7 @@ Look for epic key in plan file with pattern: `**Jira Epic:** PROJECT-123`
 
 If NOT found:
 - Extract plan title (first `#` heading)
-- Create epic using script: `./scripts/create-epic.sh "{title}"`
+- Create epic using script: `"$SCRIPTS_DIR/create-epic.sh" "{title}"`
 - Add epic key to plan file after title
 - Commit change: `git add specs/{plan-name}/{plan-name}-plan.md && git commit -m "Add Jira epic key"`
 
@@ -56,17 +74,17 @@ Build list of PRs with: number, title, status
 
 ### 5. Fetch Existing Child Work Items
 
-Run: `./scripts/fetch-subtasks.sh {epic-key}`
+Run: `"$SCRIPTS_DIR/fetch-subtasks.sh" {epic-key}`
 
 This script returns JSON with existing child work items. Parse the output to extract PR numbers from the summary field.
 
 ### 6. Sync Changes
 
 **For each PR in plan:**
-- If child work item doesn't exist: `./scripts/create-subtask.sh {epic-key} {pr-number} "{title}" {plan-name}`
+- If child work item doesn't exist: `"$SCRIPTS_DIR/create-subtask.sh" {epic-key} {pr-number} "{title}" {plan-name}`
 - If child work item exists:
-  - Compare title: If Jira summary differs from plan title, run `./scripts/update-summary.sh {issue-key} "{title}"`
-  - Compare status: If status differs, run `./scripts/update-status.sh {issue-key} "{status}"`
+  - Compare title: If Jira summary differs from plan title, run `"$SCRIPTS_DIR/update-summary.sh" {issue-key} "{title}"`
+  - Compare status: If status differs, run `"$SCRIPTS_DIR/update-status.sh" {issue-key} "{status}"`
     - Note: When transitioning to "To Do" or "In Progress", the script automatically clears the resolution field
     - This ensures issues moved back from "Done" are properly reopened
 
@@ -75,7 +93,7 @@ This script returns JSON with existing child work items. Parse the output to ext
 Compare the list of PRs from Jira (step 5) with the list of PRs from the plan (step 4).
 
 Identify PRs that exist in Jira but are NOT in the current plan file. For each removed PR:
-- Call `./scripts/close-subtask.sh {issue-key} "Removed from plan"`
+- Call `"$SCRIPTS_DIR/close-subtask.sh" {issue-key} "Removed from plan"`
 - This script will:
   1. Remove the parent link (disconnect from epic)
   2. Add a comment explaining the removal
