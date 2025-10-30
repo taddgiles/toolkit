@@ -37,7 +37,7 @@ Look for epic key in plan file with pattern: `**Jira Epic:** PROJECT-123`
 
 If NOT found:
 - Extract plan title (first `#` heading)
-- Create epic using script: `"${CLAUDE_PLUGIN_ROOT}/skills/jira-plan-sync/scripts/create-epic.sh" "{title}"`
+- Create epic using script: `node "${CLAUDE_PLUGIN_ROOT}/skills/jira-plan-sync/scripts/create-epic.js" "{title}"`
 - Add epic key to plan file after title
 - Commit change: `git add specs/{plan-name}/{plan-name}-plan.md && git commit -m "Add Jira epic key"`
 
@@ -56,17 +56,17 @@ Build list of PRs with: number, title, status
 
 ### 5. Fetch Existing Child Work Items
 
-Run: `"${CLAUDE_PLUGIN_ROOT}/skills/jira-plan-sync/scripts/fetch-subtasks.sh" {epic-key}`
+Run: `node "${CLAUDE_PLUGIN_ROOT}/skills/jira-plan-sync/scripts/fetch-subtasks.js" {epic-key}`
 
 This script returns JSON with existing child work items. Parse the output to extract PR numbers from the summary field.
 
 ### 6. Sync Changes
 
 **For each PR in plan:**
-- If child work item doesn't exist: `"${CLAUDE_PLUGIN_ROOT}/skills/jira-plan-sync/scripts/create-subtask.sh" {epic-key} {pr-number} "{title}" {plan-name}`
+- If child work item doesn't exist: `node "${CLAUDE_PLUGIN_ROOT}/skills/jira-plan-sync/scripts/create-subtask.js" {epic-key} {pr-number} "{title}" {plan-name}`
 - If child work item exists:
-  - Compare title: If Jira summary differs from plan title, run `"${CLAUDE_PLUGIN_ROOT}/skills/jira-plan-sync/scripts/update-summary.sh" {issue-key} "{title}"`
-  - Compare status: If status differs, run `"${CLAUDE_PLUGIN_ROOT}/skills/jira-plan-sync/scripts/update-status.sh" {issue-key} "{status}"`
+  - Compare title: If Jira summary differs from plan title, run `node "${CLAUDE_PLUGIN_ROOT}/skills/jira-plan-sync/scripts/update-summary.js" {issue-key} "{title}"`
+  - Compare status: If status differs, run `node "${CLAUDE_PLUGIN_ROOT}/skills/jira-plan-sync/scripts/update-status.js" {issue-key} "{status}"`
     - Note: When transitioning to "To Do" or "In Progress", the script automatically clears the resolution field
     - This ensures issues moved back from "Done" are properly reopened
 
@@ -75,7 +75,7 @@ This script returns JSON with existing child work items. Parse the output to ext
 Compare the list of PRs from Jira (step 5) with the list of PRs from the plan (step 4).
 
 Identify PRs that exist in Jira but are NOT in the current plan file. For each removed PR:
-- Call `"${CLAUDE_PLUGIN_ROOT}/skills/jira-plan-sync/scripts/close-subtask.sh" {issue-key} "Removed from plan"`
+- Call `node "${CLAUDE_PLUGIN_ROOT}/skills/jira-plan-sync/scripts/close-subtask.js" {issue-key} "Removed from plan"`
 - This script will:
   1. Remove the parent link (disconnect from epic)
   2. Add a comment explaining the removal
@@ -102,12 +102,12 @@ See `scripts/README.md` for details on each script.
 
 ## Important Constraints
 
-**CRITICAL:** You must ONLY use the bash scripts provided in the `scripts/` folder. Do NOT:
+**CRITICAL:** You must ONLY use the Node.js JavaScript scripts provided in the `scripts/` folder. Do NOT:
 - Create or use Python scripts
 - Create or use any inline Python code (e.g., `python3 -c "..."`)
-- Use `jq` or other JSON parsing tools inline
+- Create or use bash scripts
 
 Instead:
-- Use `grep`, `sed`, `awk` to parse the JSON output from scripts
-- Extract PR numbers from summaries using bash text processing
-- All logic must be implemented using bash commands and the provided scripts
+- Use Node.js's built-in `JSON.parse()` to parse the JSON output from scripts
+- Extract PR numbers from summaries using JavaScript string processing
+- All logic must be implemented using Node.js commands and the provided scripts
