@@ -12,7 +12,7 @@
     {
       "name": "elixir-best-practices",
       "source": "./elixir-best-practices",
-      "descripion": "Comprehensive Elixir and OTP best practices enforcement with code review, architecture design, and TDD support"
+      "description": "Comprehensive Elixir and OTP best practices enforcement with code review, architecture design, and TDD support"
     }
   ]
 }
