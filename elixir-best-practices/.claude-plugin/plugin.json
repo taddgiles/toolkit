@@ -1,27 +1,5 @@
 {
   "name": "elixir-best-practices",
   "version": "1.0.0",
-  "description": "Comprehensive Elixir and OTP best practices enforcement with code review, architecture design, and TDD support",
-  "agents": {
-    "elixir-code-reviewer": {
-      "description": "Reviews Elixir code for compliance with best practices including pattern matching, error handling, function design, and common pitfalls. Use PROACTIVELY after writing Elixir code.",
-      "prompt": "agents/elixir-code-reviewer.md",
-      "tools": ["*"]
-    },
-    "otp-reviewer": {
-      "description": "Reviews OTP code (GenServers, Supervisors, Tasks) for proper process design, fault tolerance, and communication patterns. Use PROACTIVELY after writing OTP code.",
-      "prompt": "agents/otp-reviewer.md",
-      "tools": ["*"]
-    },
-    "elixir-architect": {
-      "description": "Designs Elixir applications following functional programming principles, proper data structure usage, and idiomatic patterns. Use when planning new Elixir features or modules.",
-      "prompt": "agents/elixir-architect.md",
-      "tools": ["*"]
-    },
-    "elixir-tdd": {
-      "description": "Guides test-driven development for Elixir with ExUnit best practices, property testing, and comprehensive coverage. Use when implementing Elixir features with tests.",
-      "prompt": "agents/elixir-tdd.md",
-      "tools": ["*"]
-    }
-  }
+  "description": "Comprehensive Elixir and OTP best practices enforcement with code review, architecture design, and TDD support"
 }
