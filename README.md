@@ -5,7 +5,7 @@ Collection of tools I'm using in Claude Code.
 ## Installation
 
 ```
-/plugin marketplace add wshobson/agents
+/plugin marketplace add taddgiles/toolkit
 /plugin install core
 /plugin install elixir-best-practices
 ```
