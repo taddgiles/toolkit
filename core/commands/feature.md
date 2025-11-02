@@ -12,7 +12,7 @@ Create a new plan in specs/*.md to implement the `Feature` using the exact speci
 - Use your reasoning model: THINK HARD about the feature requirements, design, and implementation approach.
 - Follow existing patterns and conventions in the codebase. Don't reinvent the wheel.
 - Design for extensibility and maintainability.
-- If you need a new library, use `uv add` and be sure to report it in the `Notes` section of the `Plan Format`.
+- If you need a new library, use `mix install` and be sure to report it in the `Notes` section of the `Plan Format`.
 - Respect requested files in the `Relevant Files` section.
 - Start your research by reading the `README.md` file.
 
@@ -20,9 +20,8 @@ Create a new plan in specs/*.md to implement the `Feature` using the exact speci
 
 Focus on the following files:
 - `README.md` - Contains the project overview and instructions.
-- `app/server/**` - Contains the codebase server.
-- `app/client/**` - Contains the codebase client.
-- `scripts/**` - Contains the scripts to start and stop the server + client.
+- `lib/**` - Contains the codebase.
+- `test/**` - Contains the codebase tests.
 
 Ignore all other files in the codebase.
 
@@ -66,6 +65,8 @@ IMPORTANT: Execute every step in order, top to bottom.
 <list step by step tasks as h3 headers plus bullet points. use as many h3 headers as needed to implement the feature. Order matters, start with the foundational shared changes required then move on to the specific implementation. Include creating tests throughout the implementation process. Your last step should be running the `Validation Commands` to validate the feature works correctly with zero regressions.>
 
 ## Testing Strategy
+Focus more on Integration Tests
+
 ### Unit Tests
 <describe unit tests needed for the feature>
 
@@ -82,7 +83,6 @@ IMPORTANT: Execute every step in order, top to bottom.
 Execute every command to validate the feature works correctly with zero regressions.
 
 <list commands you'll use to validate with 100% confidence the feature is implemented correctly with zero regressions. every command must execute without errors so be specific about what you want to run to validate the feature works as expected. Include commands to test the feature end-to-end.>
-- `cd app/server && uv run pytest` - Run server tests to validate the feature works with zero regressions
 
 ## Notes
 <optionally list any additional notes, future considerations, or context that are relevant to the feature that will be helpful to the developer>
