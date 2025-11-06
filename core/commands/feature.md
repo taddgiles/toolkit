@@ -20,8 +20,12 @@ Create a new plan in specs/*.md to implement the `Feature` using the exact speci
 
 Focus on the following files:
 - `README.md` - Contains the project overview and instructions.
+- `CLAUDE.md` - Contains AI direction
+- `CLAUDE.local.md` - Contains more AI direction
 - `lib/**` - Contains the codebase.
-- `test/**` - Contains the codebase tests.
+- `test/**` - Contains tests.
+- `adws/**` - contains adws
+- `.claude/commands` - contains claude commands
 
 Ignore all other files in the codebase.
 

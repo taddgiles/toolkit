@@ -21,8 +21,12 @@ Create a new plan in specs/*.md to resolve the `Bug` using the exact specified m
 
 Focus on the following files:
 - `README.md` - Contains the project overview and instructions.
-- `app/**` - Contains the codebase client/server.
-- `scripts/**` - Contains the scripts to start and stop the server + client.
+- `CLAUDE.md` - Contains AI direction
+- `CLAUDE.local.md` - Contains more AI direction
+- `lib/**` - Contains the codebase.
+- `test/**` - Contains tests.
+- `adws/**` - contains adws
+- `.claude/commands` - contains claude commands
 
 Ignore all other files in the codebase.
 
