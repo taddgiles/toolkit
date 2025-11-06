@@ -17,6 +17,7 @@ Create a new plan in specs/*.md to resolve the `Chore` using the exact specified
 
 Focus on the following files:
 - `README.md` - Contains the project overview and instructions.
+- `CLAUDE.md` - Contains more AI direction
 - `lib/**` - Contains the codebase.
 - `test/**` - Contains tests.
 - `adws/**` - contains adws
