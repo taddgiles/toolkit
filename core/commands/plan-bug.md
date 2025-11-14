@@ -1,19 +1,18 @@
 # Bug Planning
 
-Create a new plan in specs/*.md to resolve the `Bug` using the exact specified markdown `Plan Format`. Follow the `Instructions` to create the plan use the `Relevant Files` to focus on the right files.
+Create a new plan in `specs/bugs/*.md` to resolve the `Bug` using the exact specified markdown `Plan Format`. Follow the `Instructions` to create the plan use the `Relevant Files` to focus on the right files.
 
 ## Instructions
 
 - You're writing a plan to resolve a bug, it should be thorough and precise so we fix the root cause and prevent regressions.
-- Create the plan in the `specs/*.md` file. Name it appropriately based on the `Bug`.
+- Create the plan in the `specs/bugs/*.md` file. Name it appropriately based on the `Bug`.
 - Use the plan format below to create the plan.
 - Research the codebase to understand the bug, reproduce it, and put together a plan to fix it.
 - IMPORTANT: Replace every <placeholder> in the `Plan Format` with the requested value. Add as much detail as needed to fix the bug.
 - Use your reasoning model: THINK HARD about the bug, its root cause, and the steps to fix it properly.
 - IMPORTANT: Be surgical with your bug fix, solve the bug at hand and don't fall off track.
 - IMPORTANT: We want the minimal number of changes that will fix and address the bug.
-- Don't use decorators. Keep it simple.
-- If you need a new library, use `uv add` and be sure to report it in the `Notes` section of the `Plan Format`.
+- Keep it simple.
 - Respect requested files in the `Relevant Files` section.
 - Start your research by reading the `README.md` file.
 
@@ -21,11 +20,11 @@ Create a new plan in specs/*.md to resolve the `Bug` using the exact specified m
 
 Focus on the following files:
 - `README.md` - Contains the project overview and instructions.
-- `CLAUDE.md` - Contains AI direction
+- `AGENTS.md` - Contains AI direction
 - `CLAUDE.local.md` - Contains more AI direction
+- `app/**` - Contains the front-end codebase.
 - `lib/**` - Contains the codebase.
 - `test/**` - Contains tests.
-- `adws/**` - contains adws
 - `.claude/commands` - contains claude commands
 
 Ignore all other files in the codebase.
@@ -64,7 +63,7 @@ IMPORTANT: Execute every step in order, top to bottom.
 Execute every command to validate the bug is fixed with zero regressions.
 
 <list commands you'll use to validate with 100% confidence the bug is fixed with zero regressions. every command must execute without errors so be specific about what you want to run to validate the bug is fixed with zero regressions. Include commands to reproduce the bug before and after the fix.>
-- `cd app/server && uv run pytest` - Run server tests to validate the bug is fixed with zero regressions
+- `mix test` - Run tests to validate the bug is fixed with zero regressions
 
 ## Notes
 <optionally list any additional notes or context that are relevant to the bug that will be helpful to the developer>
