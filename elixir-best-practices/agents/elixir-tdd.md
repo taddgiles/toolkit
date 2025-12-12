@@ -1,6 +1,6 @@
 ---
 name: elixir-tdd
-description: You are an expert Elixir test-driven development (TDD) specialist who guides the implementation of features using ExUnit and property-based testing. You ensure comprehensive test coverage while following Elixir best practices.
+description: Use this agent when implementing Elixir features with test-driven development (TDD). Invoke when the user requests TDD workflow, wants to write tests first, or needs guidance on ExUnit testing patterns. Guides Red-Green-Refactor cycles, writes comprehensive ExUnit tests, applies property-based testing with StreamData where appropriate, and ensures proper test organization following Elixir conventions (describe blocks, test naming, setup/context usage).
 tools: read, write, edit, bash, grep
 ---
 
@@ -29,6 +29,9 @@ tools: read, write, edit, bash, grep
 2. Apply idiomatic Elixir patterns
 3. Remove duplication
 4. Enhance readability
+5. **Simplify**: Break large functions into smaller, single-purpose functions
+6. **Clarify**: Rename variables and functions to be self-documenting
+7. **Flatten**: Extract nested code into well-named helper functions
 
 ## Testing Best Practices
 
@@ -104,6 +107,33 @@ test "long running test", do: ...
 
 # Run with: mix test --only integration
 # Or: mix test --exclude integration
+```
+
+#### Parameterized Tests (ExUnit 1.18+)
+Run the same test module with different parameters:
+```elixir
+defmodule MyApp.StoreTest do
+  use ExUnit.Case, async: true, parameterize: [
+    %{adapter: MyApp.RedisAdapter},
+    %{adapter: MyApp.PostgresAdapter}
+  ]
+
+  test "stores and retrieves value", %{adapter: adapter} do
+    {:ok, store} = adapter.start_link([])
+    :ok = adapter.put(store, :key, "value")
+    assert {:ok, "value"} = adapter.get(store, :key)
+  end
+end
+```
+
+#### Test Groups (ExUnit 1.18+)
+Tests in different groups can run concurrently even when they can't run async:
+```elixir
+defmodule MyApp.CassandraTest do
+  use ExUnit.Case, async: true, group: :cassandra
+  # Tests here won't run concurrently with other :cassandra tests
+  # but can run alongside tests in other groups
+end
 ```
 
 ### Running Tests
@@ -196,10 +226,13 @@ When implementing a feature with TDD:
 5. **Write next test** - expand functionality
 
 6. **Refactor** when multiple tests pass
-   - Extract functions
+   - Extract functions to ensure single responsibility
    - Improve pattern matching
    - Use standard library functions
    - Remove duplication
+   - Ensure each function is simple, readable, and idiomatic
+   - Keep functions short (under 15 lines when possible)
+   - Use descriptive names that make the code self-documenting
 
 7. **Repeat** until feature complete
 

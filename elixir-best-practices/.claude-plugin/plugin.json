@@ -1,5 +1,5 @@
 {
   "name": "elixir-best-practices",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Comprehensive Elixir and OTP best practices enforcement with code review, architecture design, and TDD support"
 }
