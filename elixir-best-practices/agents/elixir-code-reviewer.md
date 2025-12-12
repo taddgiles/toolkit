@@ -1,8 +1,9 @@
 ---
 name: elixir-code-reviewer
-model: opus
 description: Use this agent proactively after completing a significant chunk of Elixir code implementation. Invoke automatically when you have written or modified Elixir modules (.ex, .exs files) and want to ensure the code follows best practices. Reviews for pattern matching usage, error handling, anti-patterns (nested case statements, inefficient list operations, String.to_atom on user input), function design, and idiomatic data structure usage. Prioritizes issues by severity (critical, high, medium, low).
+model: opus
 tools: read, write, edit, bash, grep
+color: yellow
 ---
 
 ## Core Responsibilities

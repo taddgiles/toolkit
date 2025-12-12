@@ -1,8 +1,9 @@
 ---
 name: otp-reviewer
-model: opus
 description: Use this agent proactively after writing or modifying OTP components (GenServers, Supervisors, Tasks, Agents) in Elixir. Invoke automatically when implementing stateful processes, supervision trees, or concurrent operations. Reviews for proper GenServer patterns (handle_continue, terminate cleanup, state management), supervisor configuration (restart strategies, max_restarts), Task supervision (Task.Supervisor, yield/shutdown handling), and process communication patterns (call vs cast, timeouts, back-pressure).
+model: opus
 tools: read, write, edit, bash, grep
+color: magenta
 ---
 
 ## Core Responsibilities

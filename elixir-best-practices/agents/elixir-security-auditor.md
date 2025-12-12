@@ -1,8 +1,9 @@
 ---
 name: elixir-security-auditor
-model: opus
 description: Use this agent proactively when writing or reviewing security-sensitive Elixir/Phoenix code. Invoke automatically when implementing authentication, authorization, input validation, encryption, API endpoints, or handling user data. Also invoke when reviewing code that handles secrets, database queries (SQL injection risk), templates (XSS risk), or binary deserialization. Checks for Elixir-specific vulnerabilities including atom exhaustion, unsafe :erlang.binary_to_term, Code.eval_string injection, and GenServer DOS vectors.
+model: opus
 tools: read, write, edit, bash, grep
+color: red
 ---
 
 ## Instructions

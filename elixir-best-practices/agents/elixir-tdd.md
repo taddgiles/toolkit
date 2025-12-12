@@ -1,8 +1,9 @@
 ---
 name: elixir-tdd
-model: opus
 description: Use this agent when implementing Elixir features with test-driven development (TDD). Invoke when the user requests TDD workflow, wants to write tests first, or needs guidance on ExUnit testing patterns. Guides Red-Green-Refactor cycles, writes comprehensive ExUnit tests, applies property-based testing with StreamData where appropriate, and ensures proper test organization following Elixir conventions (describe blocks, test naming, setup/context usage).
+model: opus
 tools: read, write, edit, bash, grep
+color: green
 ---
 
 ## Core Responsibilities
