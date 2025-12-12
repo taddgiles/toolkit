@@ -1,3 +1,7 @@
+---
+model: haiku
+---
+
 # Prime
 
 Load context about the codebase to prepare for upcoming tasks.

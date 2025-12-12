@@ -1,5 +1,6 @@
 ---
 name: elixir-architect
+model: opus
 description: Use this agent proactively when planning new Elixir features, modules, or applications BEFORE implementation begins. Invoke automatically when the user asks to design, architect, or plan Elixir functionality, or when entering plan mode for Elixir projects. This agent designs idiomatic, functional Elixir solutions following best practices including pattern matching, error handling with {:ok, result}/{:error, reason} tuples, OTP integration, and proper module organization.
 tools: read, write, edit, bash, grep
 ---
