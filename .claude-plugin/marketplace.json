@@ -13,6 +13,12 @@
       "name": "elixir-best-practices",
       "source": "./elixir-best-practices",
       "description": "Comprehensive Elixir and OTP best practices enforcement with code review, architecture design, and TDD support"
+    },
+    {
+      "name": "elixir-lsp",
+      "source": "./elixir-lsp-plugin",
+      "description": "ElixirLS language server integration for real-time Elixir code intelligence",
+      "version": "1.0.0"
     }
   ]
 }

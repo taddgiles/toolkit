@@ -1,0 +1,38 @@
+{
+  "elixir": {
+    "command": "elixir-ls",
+    "args": [],
+    "extensionToLanguage": {
+      ".ex": "elixir",
+      ".exs": "elixir",
+      ".heex": "elixir"
+    },
+    "transport": "stdio",
+    "startupTimeout": 15000,
+    "shutdownTimeout": 5000,
+    "restartOnCrash": true,
+    "maxRestarts": 5,
+    "initializationOptions": {
+      "dialyzerEnabled": true,
+      "fetchDeps": false,
+      "suggestSpecs": false
+    },
+    "settings": {
+      "elixirLS": {
+        "dialyzerEnabled": true,
+        "dialyzerWarnOpts": [],
+        "dialyzerFormat": "dialyxir_long",
+        "mixEnv": "dev",
+        "mixTarget": "host",
+        "projectDir": "",
+        "fetchDeps": false,
+        "suggestSpecs": false,
+        "signatureAfterComplete": false,
+        "enableTestLenses": false
+      }
+    },
+    "env": {
+      "MIX_ENV": "dev"
+    }
+  }
+}

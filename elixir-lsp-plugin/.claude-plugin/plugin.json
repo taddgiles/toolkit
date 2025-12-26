@@ -1,0 +1,8 @@
+{
+  "name": "elixir-lsp",
+  "description": "ElixirLS language server integration for real-time Elixir code intelligence",
+  "version": "1.0.0",
+  "author": {
+    "name": "Tadd Giles"
+  }
+}
