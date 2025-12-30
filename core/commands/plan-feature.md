@@ -18,10 +18,12 @@ Create a new plan in `specs/features/*.md` to implement the `Feature` using the 
 
 ## Relevant Files
 
-Focus on the following files:
+Focus on the following files if available:
 - `README.md` - Contains the project overview and instructions.
 - `AGENTS.md` - Contains AI direction
+- `CLAUDE.md` - Contains more AI direction
 - `CLAUDE.local.md` - Contains more AI direction
+- `.specify/memory/constitution.md` - GitHub SpecKit Constitution
 - `app/**` - Contains the front-end codebase.
 - `lib/**` - Contains the codebase.
 - `test/**` - Contains tests.

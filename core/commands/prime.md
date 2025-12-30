@@ -15,6 +15,7 @@ Run `git ls-files | head -200` to understand file organization.
 - `README.md` - Project overview and conventions
 - `CLAUDE.md` or `AGENTS.md` - AI development guidelines (if exists)
 - `CLAUDE.local.md` - Personal AI development guidelines
+- `.specify/memory/constitution.md` - GitHub SpecKit Constitution
 
 ## Output
 
