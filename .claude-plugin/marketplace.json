@@ -5,8 +5,8 @@
   },
   "plugins": [
     {
-      "name": "core",
-      "source": "./core",
+      "name": "tadd",
+      "source": "./tadd",
       "description": "Essential agents, commands and skills"
     },
     {
