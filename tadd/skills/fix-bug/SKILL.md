@@ -6,7 +6,17 @@ description: Find, reproduce, fix, and ship a bug from Jira
 
 End-to-end bug fixing workflow using subagents to manage context efficiently.
 
-**Core Invariant**: A bug is NOT selected until it has been reproduced and a failing test exists. Jira assignment and status changes happen ONLY after reproduction is confirmed.
+## ABSOLUTE RULE — READ THIS FIRST
+
+**You MUST NOT assign a bug in Jira or move it to In Progress unless ALL of these are true:**
+
+1. The bug has been **reproduced using Playwright** (STATUS: REPRODUCED)
+2. A **failing test has been written AND executed** with a bug-related failure
+3. The **test runner itself works** — if you cannot run tests (missing deps, broken infra, unknown test command), that counts as a FAILURE, not something to skip
+
+**If ANY of these conditions are not met: HARD STOP. Do NOT proceed to Phase 4. Do NOT touch Jira. Clean up the branch, tell the user what failed, and ask how to proceed.**
+
+This is non-negotiable. No exceptions. No "I'll just assign it and figure out tests later." No skipping the test because the infrastructure isn't set up. If you can't run tests, STOP and ask the user to help you get the test infrastructure working.
 
 ## Architecture
 
@@ -150,9 +160,11 @@ git -C <service-path> checkout -b fix/<bug_key>-<short-desc>
 
 ---
 
-## Phase 3: Reproduce Bug & Create Failing Test (GATE)
+## Phase 3: Reproduce Bug & Create Failing Test (HARD GATE — BLOCKS ALL PROGRESS)
 
-This is the critical gate. The bug MUST be reproduced AND a failing test MUST be created before proceeding. If either fails, STOP.
+**THIS IS THE GATE. NOTHING PAST THIS POINT HAPPENS UNLESS THIS GATE PASSES.**
+
+The bug MUST be reproduced via Playwright AND a failing test MUST be written and executed successfully (failing for the right reason). If EITHER fails — including if you cannot run the test infrastructure at all — you MUST HARD STOP. Do NOT proceed to Phase 4. Do NOT assign the bug. Do NOT move it to In Progress.
 
 ### Step 3.1: Bug Reproduction (Subagent)
 
@@ -249,17 +261,30 @@ Create test(s) that:
 
 Run the test — it **MUST fail** with an error related to the bug.
 
-- If the test **passes** (bug not captured) → rethink the test approach. Try a different angle. If after two attempts the bug cannot be captured in a test, **HARD STOP** and ask user how to proceed.
-- If the test **fails for unrelated reasons** (setup issues, missing deps) → fix the test setup and retry.
+- If the test **passes** (bug not captured) → rethink the test approach. Try a different angle. If after two attempts the bug cannot be captured in a test, **HARD STOP**. Delete the branch. Do NOT assign the bug in Jira. Ask user how to proceed.
+- If the test **fails for unrelated reasons** (setup issues, missing deps) → try to fix the test setup and retry ONCE. If it still fails, **HARD STOP**. Do NOT proceed. Do NOT assign the bug. Ask the user to help get the test infrastructure working.
+- If the **test runner cannot be found or executed** (unknown command, missing test framework, no test config) → **HARD STOP immediately**. Do NOT proceed. Do NOT assign the bug. Ask the user: "I cannot run tests for this service. How do I start the test infrastructure?"
 - If the test **fails with bug-related error** → **GATE PASSED**. Continue to Phase 4.
 
-**CHECKPOINT**: Bug reproduced AND failing test exists. Gate passed.
+**GATE CHECK — Before proceeding to Phase 4, confirm ALL of these are true:**
+1. Playwright reproduction returned STATUS: REPRODUCED
+2. A test file was written
+3. The test command ran successfully (the runner itself worked)
+4. The test output shows a FAILURE related to the bug
+
+**If ANY of these are false: HARD STOP. Delete branch. Do NOT touch Jira. Ask the user what to do.**
 
 ---
 
 ## Phase 4: Jira Assignment (Main Agent)
 
-**Only reach this phase after Phase 3 gate is passed.**
+**STOP. Before executing ANYTHING in this phase, verify:**
+- Did Playwright reproduce the bug? (STATUS: REPRODUCED)
+- Did you write a test?
+- Did the test runner execute? (not "command not found", not "missing config")
+- Did the test fail with a bug-related error?
+
+**If you cannot answer YES to ALL FOUR: go back. Do NOT execute this phase. HARD STOP.**
 
 ### Step 4.1: Update Jira (Parallel)
 
@@ -443,13 +468,16 @@ Ready for human review and merge.
 
 ## Error Recovery
 
-| Situation                      | Action                                                                                              |
-| ------------------------------ | --------------------------------------------------------------------------------------------------- |
-| Bug can't be reproduced        | **HARD STOP**. Add Jira comment with what was tried. Delete branch. Ask user to pick another.       |
-| Failing test can't be written  | **HARD STOP**. Add Jira comment explaining the difficulty. Delete branch. Ask user to pick another. |
-| CI keeps failing on unrelated  | Ask user if they want to investigate or wait                                                        |
-| Major review changes requested | Explain scope, ask user before proceeding                                                           |
-| Merge conflicts during rebase  | Resolve conflicts, run tests, push                                                                  |
+| Situation                        | Action                                                                                                          |
+| -------------------------------- | --------------------------------------------------------------------------------------------------------------- |
+| Bug can't be reproduced          | **HARD STOP**. Do NOT assign bug. Delete branch. Ask user to pick another.                                      |
+| Failing test can't be written    | **HARD STOP**. Do NOT assign bug. Delete branch. Ask user to pick another.                                      |
+| Test infrastructure doesn't work | **HARD STOP**. Do NOT assign bug. Delete branch. Ask user: "How do I run tests for this service?"               |
+| Test runner not found/missing    | **HARD STOP**. Do NOT assign bug. Delete branch. Ask user to get test infra working before retrying.            |
+| Test fails for wrong reasons     | Retry once. If still broken: **HARD STOP**. Do NOT assign bug. Delete branch. Ask user.                         |
+| CI keeps failing on unrelated    | Ask user if they want to investigate or wait                                                                    |
+| Major review changes requested   | Explain scope, ask user before proceeding                                                                       |
+| Merge conflicts during rebase    | Resolve conflicts, run tests, push                                                                              |
 
 ---
 
@@ -460,13 +488,17 @@ Discovery → Dev Confirmation → Branch → Reproduce → Failing Test
                                                          │
                                               ┌──────────┴──────────┐
                                               │                     │
-                                           PASSED               FAILED
-                                              │                     │
-                                     Assign Jira +          HARD STOP
-                                     Move In Progress       Clean up branch
-                                              │              Comment on Jira
-                                           Fix Bug           Ask user
-                                              │
+                                           PASSED               FAILED (any reason)
+                                           (all 4               - Not reproduced
+                                           checks               - Test can't be written
+                                           confirmed)           - Test infra broken
+                                              │                 - Test runner missing
+                                              │                 - Test fails wrong reason
+                                     Assign Jira +                   │
+                                     Move In Progress          HARD STOP
+                                              │                Do NOT touch Jira
+                                           Fix Bug             Delete branch
+                                              │                Ask user
                                            PR + Monitor
 ```
 
