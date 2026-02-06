@@ -296,7 +296,7 @@ Run these two calls **in parallel**:
 # Call 1: Assign to user
 mcp__atlassian__jira_update_issue(
   issue_key: "<bug_key>",
-  fields: { "assignee": "tadd@kuali.co" }
+  fields: { "assignee": "$JIRA_EMAIL" }
 )
 
 # Call 2: Get transitions (to find IN PROGRESS id)
