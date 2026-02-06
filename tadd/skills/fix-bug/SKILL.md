@@ -8,6 +8,8 @@ End-to-end bug fixing workflow using subagents to manage context efficiently.
 
 ## ABSOLUTE RULE — READ THIS FIRST
 
+**You MUST NEVER add comments to Jira tickets unless the user explicitly asks you to.** This includes reproduction notes, status updates, or any other comments. Keep all communication in the chat with the user.
+
 **You MUST NOT assign a bug in Jira or move it to In Progress unless ALL of these are true:**
 
 1. The bug has been **reproduced using Playwright** (STATUS: REPRODUCED)
@@ -55,7 +57,7 @@ You are evaluating bugs from Jira to find one that can be confidently reproduced
 Use mcp__atlassian__jira_search:
 - jql: "project = PLT AND issuetype = Bug AND status = 'BUGS TO DO' ORDER BY priority DESC, created ASC"
 - fields: "summary,description,priority,created,reporter,labels,components"
-- limit: 15
+- limit: 50
 
 ## Step 2: Deep Evaluation of Each Bug
 
@@ -231,7 +233,7 @@ If NOT_REPRODUCED, explain what you tried and what happened instead.
 
 #### After Reproduction Subagent Returns
 
-- If **NOT_REPRODUCED** → **HARD STOP**. Do NOT proceed. Clean up the branch, add a Jira comment explaining what was tried and what happened instead, and ask user whether to investigate further or pick another bug.
+- If **NOT_REPRODUCED** → **HARD STOP**. Do NOT proceed. Clean up the branch and ask user whether to investigate further or pick another bug.
 - If **PARTIAL** → Ask user whether the partial reproduction is sufficient to write a test, or whether to pick another bug.
 - If **REPRODUCED** → Continue to Step 3.2.
 
