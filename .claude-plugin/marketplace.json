@@ -8,11 +8,6 @@
       "name": "tadd",
       "source": "./tadd",
       "description": "Essential agents, commands and skills"
-    },
-    {
-      "name": "elixir-best-practices",
-      "source": "./elixir-best-practices",
-      "description": "Comprehensive Elixir and OTP best practices enforcement with code review, architecture design, and TDD support"
     }
   ]
 }

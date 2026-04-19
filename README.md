@@ -6,8 +6,7 @@ Collection of tools I'm using in Claude Code.
 
 ```
 /plugin marketplace add taddgiles/toolkit
-/plugin install core
-/plugin install elixir-best-practices
+/plugin install tadd
 ```
 
 Each installed plugin loads only its specific agents, commands, and skills into Claude's context.
